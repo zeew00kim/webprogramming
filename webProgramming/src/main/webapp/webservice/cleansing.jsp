@@ -22,9 +22,22 @@
       font-weight: bold; 
       color: black;
     }
-    a:hover {
-      text-decoration: underline;
-      color: purple !important;
+    .welcome-message {
+      color: black;
+      font-weight: bold;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #B8D0FA;
+      border: none;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: Skyblue;
+      color: purple;
       transform: scale(1.05);
     }
   </style>
@@ -33,16 +46,28 @@
   <div class="wrap">
     <header class="header">
       <div class="h1">
-        <a href="register.jsp">회원가입</a>&nbsp;
-        <a href="login.jsp">로그인</a>&nbsp;
-        <a href="cart.jsp">장바구니</a>
+        <% 
+          // 세션에서 로그인한 사용자 이름을 가져옵니다.
+          String userName = (String) session.getAttribute("userName");
+          if (userName != null) {
+        %> 
+          <!-- 로그인한 경우 -->
+          <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
+          <form action="cleansing.jsp" method="post">
+            <button type="submit" name="logout" class="button">로그아웃</button>
+          </form>
+        <% } else { %>
+          <!-- 로그인하지 않은 경우 -->
+          <a href="register.jsp" class="button">회원가입</a>
+          <a href="login.jsp" class="button">로그인</a>
+        <% } %>
       </div>
       <div class="h2">
         <a href="index.jsp">
-          <img src="../webservice/image/스크린샷 2024-11-28 210005.png" width="289" height="103" alt="로고">
+          <img src="<%= request.getContextPath() %>/webservice/image/스크린샷 2024-11-28 210005.png" width="289" height="103" alt="로고">
         </a>
       </div>
-      <nav class="h3">
+      <div class="h3">
         <div class="h3_center">
           <a href="all_item.jsp">전체상품</a>&nbsp;
           <a href="lotion.jsp">로션/크림</a>&nbsp;
@@ -51,38 +76,46 @@
           <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
-          <img src="../webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
-          <img src="../webservice/image/free-icon-font-user-17766671.png" width="24" height="24" alt="사용자">
+          <img src="<%= request.getContextPath() %>/webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
+          <img src="<%= request.getContextPath() %>/webservice/image/free-icon-font-user-17766671.png" width="24" height="24" alt="사용자">
         </div>
-      </nav>
+      </div>
     </header>
 
-    <main class="main">
+    <div class="main">
       <h1 class="m1">클렌징</h1>
-      <section class="m2">
+      <div class="m2">
         <div class="product_image">
           <div class="product">
-            <img src="../webservice/image/KakaoTalk_20241127_111509868_18.jpg" width="860" height="1075" alt="클렌징 제품 1">
+            <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241127_111509868_18.jpg" width="860" height="1075" alt="클렌징 제품 1">
           </div>
           <div class="product">
-            <img src="../webservice/image/KakaoTalk_20241127_111509868_04.jpg" width="858" height="1147" alt="클렌징 제품 2">
+            <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241127_111509868_04.jpg" width="858" height="1147" alt="클렌징 제품 2">
           </div>
           <div class="product">
-            <img src="../webservice/image/클렌저.jpg" width="1000" height="1000" alt="클렌저 1">
+            <img src="<%= request.getContextPath() %>/webservice/image/클렌저.jpg" width="1000" height="1000" alt="클렌저 1">
           </div>
           <div class="product">
-            <img src="../webservice/image/클렌저2.jpg" width="1000" height="1000" alt="클렌저 2">
+            <img src="<%= request.getContextPath() %>/webservice/image/클렌저2.jpg" width="1000" height="1000" alt="클렌저 2">
           </div>
           <div class="product">
-            <img src="../webservice/image/KakaoTalk_20241128_194419059_05.jpg" width="481" height="510" alt="클렌징 제품 3">
+            <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241128_194419059_05.jpg" width="481" height="510" alt="클렌징 제품 3">
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
 
     <footer class="footer">
       <span style="font-weight: bold">웹프로그래밍응용 Team_Project</span>
     </footer>
   </div>
+
+  <% 
+    // 로그아웃 처리
+    if (request.getParameter("logout") != null) {
+        session.invalidate();  // 세션 종료
+        response.sendRedirect("cleansing.jsp");  // 로그아웃 후 cleansing.jsp로 리다이렉트
+    }
+  %>
 </body>
 </html>
