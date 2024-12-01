@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="webprogramming.WebDAO" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -44,6 +46,12 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
+
+    .success-message {
+      color: green;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
@@ -76,17 +84,36 @@
     </div>
 
     <div class="main">
-      <h1 class="m1">회원가입</h1>
-      <div class="m2">
-        <%
-          // 에러 메시지 처리
+      <h1 class="m1" style="text-align: center;">회원가입</h1>
+      <%
+          // 에러 및 성공 메시지 처리
           String error = request.getParameter("error");
+          String success = request.getParameter("success");
+
           if ("passwordMismatch".equals(error)) {
-        %>
-          <div class="error-message">비밀번호가 일치하지 않습니다. 다시 입력해주세요.</div>
-        <%
+      %>
+          <div class="error-message" style="text-align: center;">비밀번호가 일치하지 않습니다. 다시 입력해주세요.</div>
+      <%
+          } else if ("duplicateId".equals(error)) {
+      %>
+          <div class="error-message" style="text-align: center;">아이디가 이미 사용 중입니다!</div>
+      <%
+          } else if ("duplicatePassword".equals(error)) {
+      %>
+          <div class="error-message" style="text-align: center;">비밀번호가 이미 사용 중입니다!</div>
+      <%
+          } else if ("insertFailed".equals(error)) {
+      %>
+          <div class="error-message" style="text-align: center;">회원가입에 실패했습니다. 다시 시도해주세요.</div>
+      <%
+          } else if ("true".equals(success)) {
+      %>
+          <div class="success-message" style="text-align: center;">회원가입이 완료되었습니다. 로그인 페이지로 이동하세요.</div>
+      <%
           }
-        %>
+      %>
+      
+      <div class="m2">
         <form action="registerProcess.jsp" method="post" class="signup-form">
           <input type="text" name="name" placeholder="아이디를 입력하세요" required><br>
           <input type="password" name="password" placeholder="비밀번호를 입력하세요" required><br>

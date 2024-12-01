@@ -2,59 +2,56 @@ package webprogramming;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class WebDAO {
-    public static void main(String[] args) {
-        String jdbcURL = "jdbc:mysql://localhost:3306/webprogramming?useSSL=false&serverTimezone=UTC";
-        String dbUser = "root";
-        String dbPassword = "root";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/webprogramming?useSSL=false&serverTimezone=UTC";
+    private final String dbUser = "root";
+    private final String dbPassword = "root";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
-            System.out.println("Connected to the database!");
-
-            System.out.println("\n--- User Table ---");
-            String userSql = "SELECT * FROM user";
-            Statement userStatement = connection.createStatement();
-            ResultSet userResultSet = userStatement.executeQuery(userSql);
-
-            while (userResultSet.next()) {
-                int userId = userResultSet.getInt("user_id");
-                String userName = userResultSet.getString("user_name");
-                String userPassword = userResultSet.getString("user_password");
-                int gender = userResultSet.getInt("gender");
-                String genderText = (gender == 1) ? "남성" : "여성";
-
-                System.out.printf("ID: %d, Name: %s, Password: %s, Gender: %s\n", userId, userName, userPassword, genderText);
+    // 아이디 중복 확인 메서드
+    public boolean isDuplicateId(String userName) {
+        String sql = "SELECT COUNT(*) FROM user WHERE user_name = ?";
+        try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, userName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
             }
-
-            System.out.println("\n--- Product Table ---");
-            String productSql = "SELECT * FROM product";
-            Statement productStatement = connection.createStatement();
-            ResultSet productResultSet = productStatement.executeQuery(productSql);
-
-            while (productResultSet.next()) {
-                int productId = productResultSet.getInt("product_id");
-                String productName = productResultSet.getString("product_name");
-                int salePrice = productResultSet.getInt("sale_price");
-                int shippingCharge = productResultSet.getInt("shipping_charge");
-
-                System.out.printf("Product ID: %d, Name: %s, Sale Price: %d, Shipping Charge: %d\n",
-                        productId, productName, salePrice, shippingCharge);
-            }
-
-            userResultSet.close();
-            userStatement.close();
-            productResultSet.close();
-            productStatement.close();
-            connection.close();
-            System.out.println("Database connection closed.");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    // 비밀번호 중복 확인 메서드
+    public boolean isDuplicatePassword(String userPassword) {
+        String sql = "SELECT COUNT(*) FROM user WHERE user_password = ?";
+        try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, userPassword);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // 회원가입 메서드
+    public boolean insertUser(String userName, String userPassword, int gender) {
+        String sql = "INSERT INTO user (user_name, user_password, gender) VALUES (?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, userName);
+            pstmt.setString(2, userPassword);
+            pstmt.setInt(3, gender);
+            return pstmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
