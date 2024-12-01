@@ -27,15 +27,45 @@
       color: purple !important;
       transform: scale(1.05);
     }
+    .welcome-message {
+      color: black;
+      font-weight: bold;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #B8D0FA;
+      border: none;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: Skyblue;
+      color: purple;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="header">
       <div class="h1">
-        <a href="register.jsp">회원가입</a>&nbsp;
-        <a href="login.jsp">로그인</a>&nbsp;
-        <a href="cart.jsp">장바구니</a>
+        <% 
+          // 세션에서 로그인한 사용자 이름을 가져옵니다.
+          String userName = (String) session.getAttribute("userName");
+          if (userName != null) {
+        %> 
+          <!-- 로그인한 경우 -->
+          <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
+          <form action="index.jsp" method="post">
+            <button type="submit" name="logout" class="button">로그아웃</button>
+          </form>
+        <% } else { %>
+          <!-- 로그인하지 않은 경우 -->
+          <a href="register.jsp" class="button">회원가입</a>
+          <a href="login.jsp" class="button">로그인</a>
+        <% } %>
       </div>
       <div class="h2">
         <a href="index.jsp">
@@ -118,5 +148,13 @@
       <span style="font-weight: bold">웹프로그래밍응용 Team_Project</span>
     </footer>
   </div>
+
+  <% 
+    // 로그아웃 처리
+    if (request.getParameter("logout") != null) {
+        session.invalidate();  // 세션 종료
+        response.sendRedirect("index.jsp");  // 로그아웃 후 index.jsp로 리다이렉트
+    }
+  %>
 </body>
 </html>

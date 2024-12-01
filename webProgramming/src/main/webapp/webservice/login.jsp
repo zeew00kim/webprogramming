@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
+<%@ page import="java.sql.Connection, java.sql.DriverManager, java.sql.PreparedStatement, java.sql.ResultSet" %>
+<%@ page import="webprogramming.WebDAO" %>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -27,6 +30,11 @@
       text-decoration: underline;
       color: purple !important;
       transform: scale(1.05);
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -62,12 +70,41 @@
       <h1 class="m1">로그인</h1>
       <div class="m2">
         <div class="login-area">
-          <form action="loginProcess.jsp" method="post">
+          <form method="post">
             <input type="text" name="memberId" placeholder="아이디 또는 이메일" required><br>
             <input type="password" name="password" placeholder="비밀번호" required><br>
             <input type="submit" value="로그인"><br>
             <a href="register.jsp">회원가입</a>&nbsp;
           </form>
+
+          <!-- 로그인 실패 시 에러 메시지 출력 -->
+          <%
+            String error = request.getParameter("error");
+            if ("invalid".equals(error)) {
+          %>
+            <p class="error">등록되지 않은 계정입니다 😢</p>
+          <%
+            }
+          %>
+
+          <%
+            // 로그인 처리
+            if ("POST".equalsIgnoreCase(request.getMethod())) {
+                String memberId = request.getParameter("memberId").trim();  // 공백 제거
+                String password = request.getParameter("password").trim(); // 공백 제거
+
+                WebDAO dao = new WebDAO();
+                boolean isValidUser = dao.isValidUser(memberId, password);
+
+                if (isValidUser) {
+                    // 로그인 성공 시 세션에 사용자 정보를 저장
+                    session.setAttribute("userName", memberId);  // 세션에 아이디 저장
+                    response.sendRedirect("index.jsp");  // 로그인 성공 시 index.jsp로 이동
+                } else {
+                    response.sendRedirect("login.jsp?error=invalid");  // 로그인 실패 시 다시 login.jsp로 리다이렉트
+                }
+            }
+          %>
         </div>
       </div>
     </div>
