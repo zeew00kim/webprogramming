@@ -57,7 +57,7 @@
 
     .buttons .buy-button {
       background-color: #b8d0fa;
-      border: none;
+      border: solid silver 2px;
       color: black;
       font-weight: bold;
     }
@@ -94,36 +94,54 @@
       padding-left: 10px;
     }
 
-    .success-banner {
+    .overlay {
       display: none;
-      background-color: #B8D0FA;
-      text-align: center;
-      padding: 20px;
       position: fixed;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40%;
-      border-radius: 5px;
-      font-size: 1.5em;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
     }
 
-    .success-banner button {
-      padding: 10px 20px;
-      font-size: 1em;
+    .confirm-banner {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: white;
+      border: 2px solid #B8D0FA;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .confirm-banner button {
+      margin: 10px;
+      padding: 10px 20px;
       font-weight: bold;
-      border-radius: 5px;
       border: none;
-      cursor: pointer;
-      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer
       transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
-    .success-banner button:hover {
+    .confirm-banner .confirm {
+      background-color: #B8D0FA;
+      color: black;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .confirm-banner .confirm:hover {
       background-color: Skyblue;
       transform: scale(1.05);
-      border: silver;
+      color: purple;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -192,13 +210,16 @@
     </footer>
   </div>
 
-  <div id="successBanner" class="success-banner">
-    구매가 완료되었습니다. 감사합니다 😊
-    <button onclick="redirectToHome()">확인</button>
+  <div id="overlay" class="overlay"></div>
+  <div id="successBanner" class="confirm-banner">
+    <p>구매가 완료되었습니다.</p>
+    <p>감사합니다 😊</p>
+    <button class="confirm" onclick="redirectToHome()">확인</button>
   </div>
 
   <script>
     function showSuccessBanner() {
+      document.getElementById('overlay').style.display = 'block';
       document.getElementById('successBanner').style.display = 'block';
     }
 
@@ -208,3 +229,4 @@
   </script>
 </body>
 </html>
+      

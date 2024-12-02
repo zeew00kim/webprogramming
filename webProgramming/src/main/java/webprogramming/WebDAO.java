@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class WebDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/webprogramming?useSSL=false&serverTimezone=UTC";
@@ -32,7 +33,7 @@ public class WebDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

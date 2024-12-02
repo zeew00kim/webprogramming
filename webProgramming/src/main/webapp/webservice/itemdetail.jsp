@@ -17,6 +17,12 @@
     * {
       box-sizing: inherit;
     }
+    
+    .welcome-message {
+      color: black;
+      font-weight: bold;
+    }
+    
     a {
       text-decoration: none;
       font-weight: bold;
@@ -51,28 +57,16 @@
       cursor: pointer;
       transition: transform 0.3s ease, background-color 0.3s ease;
     }
-    .buttons .cart-button {
+    .buttons .button {
       background-color: #b8d0fa;
       border: 2px solid silver;
       color: black;
     }
-    .buttons .cart-button:hover {
+    .buttons .button:hover {
       background-color: skyblue;
       transform: scale(1.05);
     }
-    .buttons .buy-button {
-      background-color: #b8d0fa;
-      border: 2px solid silver;
-      color: black;
-    }
-    .buttons .buy-button:hover {
-      background-color: Skyblue;
-      transform: scale(1.05);
-    }
-    .buttons a {
-      color: inherit;
-      text-decoration: none;
-    }
+
     .button {
       padding: 10px 20px;
       background-color: #B8D0FA;
@@ -86,6 +80,61 @@
       background-color: Skyblue;
       color: purple;
       transform: scale(1.05);
+    }
+
+    /* 배너 스타일 */
+    .confirm-banner {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 2px solid #B8D0FA;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .confirm-banner button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .confirm-banner .confirm {
+      background-color: #B8D0FA;
+      color: black;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .confirm-banner .confirm:hover {
+      background-color: Skyblue;
+      color: purple;
+      transform: scale(1.05);
+    }
+    .confirm-banner .cancel {
+      background-color: #ccc;
+      color: black;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .confirm-banner .cancel:hover {
+      background-color: #999;
+      color: purple;
+      transform: scale(1.05);
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
     }
   </style>
 </head>
@@ -121,10 +170,6 @@
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
         </div>
-        <div class="h3_right">
-          <img src="../webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
-          <img src="../webservice/image/free-icon-font-user-17766671.png" width="24" height="24" alt="사용자">
-        </div>
       </nav>
     </header>
 
@@ -138,12 +183,10 @@
           <span class="product-price">판매 가격&nbsp;&nbsp;15,000원</span>
           <span class="shipping-fee">배송비&nbsp;&nbsp;2,500원</span><br>
           <div class="buttons">
-            <form action="cart.jsp" method="get" style="display: inline;">
-  				<button type="submit" class="button">장바구니에 담기</button>
-			</form>
+            <button class="button" onclick="showBanner()">장바구니에 담기</button>
             <form action="buy.jsp" method="get" style="display: inline;">
-  				<button type="submit" class="button">구매하기</button>
-			</form>
+              <button type="submit" class="button">구매하기</button>
+            </form>
           </div>
         </div>
       </section>
@@ -154,9 +197,28 @@
     </footer>
   </div>
 
-  <%if (request.getParameter("logout") != null) {
-      	session.invalidate(); 
-      	response.sendRedirect("itemdetail.jsp"); 
-  	}%>
+  <!-- 배너 및 오버레이 -->
+  <div class="overlay" id="overlay"></div>
+  <div class="confirm-banner" id="confirmBanner">
+    <p>장바구니에 담으시겠습니까?</p>
+    <button class="confirm" onclick="redirectToCart()">확인</button>
+    <button class="cancel" onclick="hideBanner()">취소</button>
+  </div>
+
+  <script>
+    function showBanner() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('confirmBanner').style.display = 'block';
+    }
+
+    function hideBanner() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('confirmBanner').style.display = 'none';
+    }
+
+    function redirectToCart() {
+      window.location.href = 'cart.jsp';
+    }
+  </script>
 </body>
 </html>
