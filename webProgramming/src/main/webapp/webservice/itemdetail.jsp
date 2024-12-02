@@ -6,7 +6,17 @@
   <title>제품 상세 페이지</title>
   <link href="layout1.css" rel="stylesheet" type="text/css">
   <style>
-    /* 링크 스타일 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    * {
+      box-sizing: inherit;
+    }
     a {
       text-decoration: none;
       font-weight: bold;
@@ -18,7 +28,6 @@
       transform: scale(1.05);
     }
 
-    /* 제품 정보 스타일 */
     .product-name {
       font-weight: bold;
       font-size: 1.5em;
@@ -29,7 +38,6 @@
       display: block;
     }
 
-    /* 버튼 스타일 */
     .buttons {
       margin-top: 20px;
       display: flex;
@@ -46,6 +54,7 @@
     .buttons .cart-button {
       background-color: #b8d0fa;
       border: 2px solid silver;
+      color: black; /* 글자 색상 변경 */
     }
     .buttons .cart-button:hover {
       background-color: skyblue;
@@ -54,6 +63,7 @@
     .buttons .buy-button {
       background-color: #b8d0fa;
       border: 2px solid silver;
+      color: black; /* 글자 색상 변경 */
     }
     .buttons .buy-button:hover {
       background-color: Skyblue;
