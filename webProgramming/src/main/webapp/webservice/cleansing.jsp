@@ -73,7 +73,6 @@
           <a href="lotion.jsp">로션/크림</a>&nbsp;
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
-          <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
           <img src="<%= request.getContextPath() %>/webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
@@ -100,6 +99,11 @@
           </div>
           <div class="product">
             <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241128_194419059_05.jpg" width="481" height="510" alt="클렌징 제품 3">
+          </div>
+          <div class="product">
+            <a href="itemdetail.jsp">
+              <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241127_111509868_02.jpg" alt="Product 2">
+            </a>
           </div>
         </div>
       </div>

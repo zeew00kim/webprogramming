@@ -52,13 +52,15 @@
     <header class="header">
       <div class="h1">
         <% 
-          // 세션에서 로그인한 사용자 이름을 가져옵니다.
           String userName = (String) session.getAttribute("userName");
           if (userName != null) {
         %> 
           <!-- 로그인한 경우 -->
           <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
-          <form action="index.jsp" method="post">
+          <form action="cart.jsp" method="get" style="display: inline;">
+            <button type="submit" class="button">장바구니</button>
+          </form>
+          <form action="index.jsp" method="post" style="display: inline;">
             <button type="submit" name="logout" class="button">로그아웃</button>
           </form>
         <% } else { %>
@@ -78,7 +80,6 @@
           <a href="lotion.jsp">로션/크림</a>&nbsp;
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
-          <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
           <img src="../webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
@@ -140,7 +141,6 @@
             <p>CICA 크림 리뷰<br>여드름이 많이 개선되었어요!</p>
           </div>
         </div>
-        <button class="review-btn">리뷰 더보기</button>
       </section>
     </main>
 

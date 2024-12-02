@@ -54,7 +54,7 @@
     .buttons .cart-button {
       background-color: #b8d0fa;
       border: 2px solid silver;
-      color: black; /* 글자 색상 변경 */
+      color: black;
     }
     .buttons .cart-button:hover {
       background-color: skyblue;
@@ -63,7 +63,7 @@
     .buttons .buy-button {
       background-color: #b8d0fa;
       border: 2px solid silver;
-      color: black; /* 글자 색상 변경 */
+      color: black;
     }
     .buttons .buy-button:hover {
       background-color: Skyblue;
@@ -73,15 +73,41 @@
       color: inherit;
       text-decoration: none;
     }
+    .button {
+      padding: 10px 20px;
+      background-color: #B8D0FA;
+      border: none;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: Skyblue;
+      color: purple;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="header">
       <div class="h1">
-        <a href="register.jsp">회원가입</a>&nbsp;
-        <a href="login.jsp">로그인</a>&nbsp;
-        <a href="cart.jsp">장바구니</a>
+        <% 
+          // 세션에서 로그인한 사용자 이름을 가져옵니다.
+          String userName = (String) session.getAttribute("userName");
+          if (userName != null) {
+        %> 
+          <!-- 로그인한 경우 -->
+          <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
+          <form action="itemdetail.jsp" method="post" style="display: inline;">
+            <button type="submit" name="logout" class="button">로그아웃</button>
+          </form>
+        <% } else { %>
+          <!-- 로그인하지 않은 경우 -->
+          <a href="register.jsp" class="button">회원가입</a>
+          <a href="login.jsp" class="button">로그인</a>
+        <% } %>
       </div>
       <div class="h2">
         <a href="index.jsp">
@@ -94,7 +120,6 @@
           <a href="lotion.jsp">로션/크림</a>&nbsp;
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
-          <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
           <img src="../webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
@@ -128,5 +153,10 @@
       <span style="font-weight: bold">웹프로그래밍응용 Team_Project</span>
     </footer>
   </div>
+
+  <%if (request.getParameter("logout") != null) {
+      	session.invalidate(); 
+      	response.sendRedirect("itemdetail.jsp"); 
+  	}%>
 </body>
 </html>

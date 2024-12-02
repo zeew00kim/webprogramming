@@ -113,6 +113,7 @@
       background-color: white;
       font-weight: bold;
       border-radius: 5px;
+      border: none;
       cursor: pointer;
       margin-top: 10px;
       transition: transform 0.3s ease, background-color 0.3s ease;
@@ -153,7 +154,6 @@
           <a href="lotion.jsp">로션/크림</a>&nbsp;
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
-          <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
           <img src="<%= request.getContextPath() %>/webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">

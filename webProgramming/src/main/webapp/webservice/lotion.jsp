@@ -73,7 +73,6 @@
           <a href="lotion.jsp">로션/크림</a>&nbsp;
           <a href="cleansing.jsp">클렌징</a>&nbsp;
           <a href="ampoule.jsp">앰플/세럼</a>&nbsp;
-          <a href="events.jsp">진행중 이벤트</a>
         </div>
         <div class="h3_right">
           <img src="<%= request.getContextPath() %>/webservice/image/free-icon-font-search-17767794.png" width="24" height="24" alt="검색">
@@ -90,11 +89,6 @@
             <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241127_111509868_16.jpg" width="859" height="1076" alt="Product 1">
           </div>
           <div class="product">
-            <a href="itemdetail.jsp">
-              <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241127_111509868_02.jpg" alt="Product 2">
-            </a>
-          </div>
-          <div class="product">
             <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241128_194419059_15.jpg" width="525" height="700" alt="Product 3">
           </div>
           <div class="product">
@@ -102,9 +96,6 @@
           </div>
           <div class="product">
             <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241128_194419059_08.jpg" width="736" height="736" alt="Product 5">
-          </div>
-          <div class="product">
-            <img src="<%= request.getContextPath() %>/webservice/image/KakaoTalk_20241128_194419059_05.jpg" alt="Product 6">
           </div>
         </div>
       </div>
