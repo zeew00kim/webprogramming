@@ -76,9 +76,9 @@
     .button {
       padding: 10px 20px;
       background-color: #B8D0FA;
-      border: none;
       cursor: pointer;
       color: black;
+      border: none;
       font-weight: bold;
       border-radius: 5px;
     }
@@ -138,12 +138,12 @@
           <span class="product-price">판매 가격&nbsp;&nbsp;15,000원</span>
           <span class="shipping-fee">배송비&nbsp;&nbsp;2,500원</span><br>
           <div class="buttons">
-            <button class="cart-button">
-              <a href="cart.jsp">장바구니</a>
-            </button>
-            <button class="buy-button">
-              <a href="buy.jsp">구매하기</a>
-            </button>
+            <form action="cart.jsp" method="get" style="display: inline;">
+  				<button type="submit" class="button">장바구니에 담기</button>
+			</form>
+            <form action="buy.jsp" method="get" style="display: inline;">
+  				<button type="submit" class="button">구매하기</button>
+			</form>
           </div>
         </div>
       </section>

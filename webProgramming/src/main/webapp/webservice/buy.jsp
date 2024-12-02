@@ -57,7 +57,7 @@
 
     .buttons .buy-button {
       background-color: #b8d0fa;
-      border: 2px solid silver;
+      border: none;
       color: black;
       font-weight: bold;
     }
@@ -65,6 +65,7 @@
     .buttons .buy-button:hover {
       background-color: Skyblue;
       transform: scale(1.05);
+      color: purple;
     }
 
     .buttons a {
