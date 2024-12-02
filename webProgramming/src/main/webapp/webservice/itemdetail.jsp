@@ -82,7 +82,6 @@
       transform: scale(1.05);
     }
 
-    /* 배너 스타일 */
     .confirm-banner {
       display: none;
       position: fixed;
@@ -143,17 +142,14 @@
     <header class="header">
       <div class="h1">
         <% 
-          // 세션에서 로그인한 사용자 이름을 가져옵니다.
           String userName = (String) session.getAttribute("userName");
           if (userName != null) {
         %> 
-          <!-- 로그인한 경우 -->
           <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
           <form action="itemdetail.jsp" method="post" style="display: inline;">
             <button type="submit" name="logout" class="button">로그아웃</button>
           </form>
         <% } else { %>
-          <!-- 로그인하지 않은 경우 -->
           <a href="register.jsp" class="button">회원가입</a>
           <a href="login.jsp" class="button">로그인</a>
         <% } %>
@@ -183,10 +179,8 @@
           <span class="product-price">판매 가격&nbsp;&nbsp;15,000원</span>
           <span class="shipping-fee">배송비&nbsp;&nbsp;2,500원</span><br>
           <div class="buttons">
-            <button class="button" onclick="showBanner()">장바구니에 담기</button>
-            <form action="buy.jsp" method="get" style="display: inline;">
-              <button type="submit" class="button">구매하기</button>
-            </form>
+            <button class="button" onclick="showCartBanner()">장바구니에 담기</button>
+            <button class="button" onclick="checkLogin()">구매하기</button>
           </div>
         </div>
       </section>
@@ -197,18 +191,30 @@
     </footer>
   </div>
 
-  <!-- 배너 및 오버레이 -->
   <div class="overlay" id="overlay"></div>
   <div class="confirm-banner" id="confirmBanner">
-    <p>장바구니에 담으시겠습니까?</p>
-    <button class="confirm" onclick="redirectToCart()">확인</button>
+    <p id="bannerMessage">로그인이 필요합니다!</p>
+    <button class="confirm" id="confirmButton">확인</button>
     <button class="cancel" onclick="hideBanner()">취소</button>
   </div>
 
   <script>
-    function showBanner() {
+    function showCartBanner() {
+      document.getElementById('bannerMessage').innerText = "장바구니에 담으시겠습니까?";
+      document.getElementById('confirmButton').onclick = redirectToCart;
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('confirmBanner').style.display = 'block';
+    }
+
+    function checkLogin() {
+      <% if (userName == null) { %>
+        document.getElementById('bannerMessage').innerText = "로그인이 필요합니다!";
+        document.getElementById('confirmButton').onclick = redirectToLogin;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('confirmBanner').style.display = 'block';
+      <% } else { %>
+        window.location.href = 'buy.jsp';
+      <% } %>
     }
 
     function hideBanner() {
@@ -218,6 +224,10 @@
 
     function redirectToCart() {
       window.location.href = 'cart.jsp';
+    }
+
+    function redirectToLogin() {
+      window.location.href = 'login.jsp';
     }
   </script>
 </body>
