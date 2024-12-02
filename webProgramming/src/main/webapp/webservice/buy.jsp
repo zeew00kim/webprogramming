@@ -40,6 +40,21 @@
       display: block;
     }
 
+	.button {
+      padding: 10px 20px;
+      background-color: #B8D0FA;
+      cursor: pointer;
+      color: black;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: Skyblue;
+      color: purple;
+      transform: scale(1.05);
+    }
+
     .buttons {
       margin-top: 20px;
       display: flex;
@@ -227,6 +242,13 @@
       window.location.href = 'index.jsp';
     }
   </script>
+  <% 
+    // 로그아웃 처리
+    if (request.getParameter("logout") != null) {
+        session.invalidate();  // 세션 종료
+        response.sendRedirect("cleansing.jsp");  // 로그아웃 후 cleansing.jsp로 리다이렉트
+    }
+  %>
 </body>
 </html>
       
