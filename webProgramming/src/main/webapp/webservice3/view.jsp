@@ -19,14 +19,13 @@
             int id = Integer.parseInt(request.getParameter("id"));
 
             try {
-                String jdbcUrl = "jdbc:mysql://localhost:3306/jspdb?useSSL=false&serverTimezone=UTC";
+                String jdbcUrl = "jdbc:mysql://localhost:3306/webprogramming?useSSL=false&serverTimezone=UTC";
                 String dbId = "root";
-                String dbPass = "2936";
+                String dbPass = "root";
 
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection(jdbcUrl, dbId, dbPass);
 
-                // 게시글 조회
                 String sql = "SELECT * FROM board WHERE id = ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, id);
@@ -45,7 +44,6 @@
                     out.println("<p>" + content + "</p>");
                 }
 
-                // 댓글 조회
                 out.println("<h2>댓글</h2>");
                 String commentSql = "SELECT * FROM comments WHERE board_id = ? ORDER BY created_at ASC";
                 pstmt = conn.prepareStatement(commentSql);

@@ -101,8 +101,6 @@ body {
 .header-links a:hover {
     color: #007BFF;
 }
-
-<style>
     html, body {
       margin: 0;
       padding: 0;
@@ -142,4 +140,3 @@ body {
       color: purple;
       transform: scale(1.05);
     }
-  </style>

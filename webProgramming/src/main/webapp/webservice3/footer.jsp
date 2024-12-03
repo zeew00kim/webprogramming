@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>footer 페이지</title>
 </head>
 <body>
- <footer class="footer">
-      <span style="font-weight: bold">웹서비스프로그래밍 Team_Project</span>
+	<footer class="footer">
+		<span style="font-weight: bold">웹서비스프로그래밍 Team_Project</span>
     </footer>
 </body>
 </html>
