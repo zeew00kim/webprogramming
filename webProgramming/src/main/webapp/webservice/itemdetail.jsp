@@ -231,10 +231,9 @@
     }
   </script>
   <% 
-    // 로그아웃 처리
     if (request.getParameter("logout") != null) {
-        session.invalidate();  // 세션 종료
-        response.sendRedirect("cleansing.jsp");  // 로그아웃 후 cleansing.jsp로 리다이렉트
+        session.invalidate();  
+        response.sendRedirect("cleansing.jsp");
     }
   %>
 </body>
