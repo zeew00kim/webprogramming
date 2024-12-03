@@ -23,7 +23,6 @@ public class WebDAO {
         return dbPassword;
     }
 
-    // 사용자 인증 확인 메서드
     public boolean isValidUser(String userName, String userPassword) {
         String sql = "SELECT COUNT(*) FROM user WHERE user_name = ? AND user_password = ?";
         try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);

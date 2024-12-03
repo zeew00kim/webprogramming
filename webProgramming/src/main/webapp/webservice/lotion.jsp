@@ -47,17 +47,14 @@
     <header class="header">
       <div class="h1">
         <% 
-          // 세션에서 로그인한 사용자 이름을 가져옵니다.
           String userName = (String) session.getAttribute("userName");
           if (userName != null) {
         %> 
-          <!-- 로그인한 경우 -->
           <p class="welcome-message"><%= userName %>님 반갑습니다 😊</p>
           <form action="lotion.jsp" method="post">
             <button type="submit" name="logout" class="button">로그아웃</button>
           </form>
         <% } else { %>
-          <!-- 로그인하지 않은 경우 -->
           <a href="register.jsp" class="button">회원가입</a>
           <a href="login.jsp" class="button">로그인</a>
         <% } %>
@@ -107,10 +104,9 @@
   </div>
 
   <% 
-    // 로그아웃 처리
     if (request.getParameter("logout") != null) {
-        session.invalidate();  // 세션 종료
-        response.sendRedirect("lotion.jsp");  // 로그아웃 후 lotion.jsp로 리다이렉트
+        session.invalidate(); 
+        response.sendRedirect("lotion.jsp"); 
     }
   %>
 </body>
